@@ -11,7 +11,7 @@
  * @return void
  */
 
- // Post Gravity form #1 (Apply Online) to Gragg
+// START Post Gravity form #1 (Apply Online) to Gragg
 add_action( 'gform_after_submission_1', 'post_to_third_party', 10, 2 );
 function post_to_third_party( $entry, $form ) {
 
@@ -31,8 +31,7 @@ function post_to_third_party( $entry, $form ) {
 		'email' => rgar( $entry, '2' ),
 		'lname' => rgar( $entry, '23' ),
 		'fname' => rgar( $entry, '24' ),
-		'text_opt' => rgar( $entry, '4' ),
-		'text_opt' => rgar( $entry, '4' ),
+		'text_opt' => rgar( $entry, '4' )
         );
 
 	// Debug Log post
@@ -44,7 +43,41 @@ function post_to_third_party( $entry, $form ) {
 	// Debug Log post response
     GFCommon::log_debug( 'gform_after_submission: response => ' . print_r( $response, true ) );
 }
+// END Post Gravity form #1 (Apply Online) to Gragg
 
+// START Post Gravity form #5 (Schedule a Visit) to Gragg
+add_action( 'gform_after_submission_5', 'post_to_third_party_id5', 10, 2 );
+function post_to_third_party_id5( $entry, $form ) {
+
+    $endpoint_url = 'http://services.graggadv.com/lead-gateway/';
+    $body = array(
+        'glue_id' => rgar( $entry, '20' ),
+        'campus' => rgar( $entry, '5' ),
+        'message' => rgar( $entry, '16' ),
+		'program' => rgar( $entry, '7' ),
+		'gradyear' => rgar( $entry, '15' ),
+		'zip' => rgar( $entry, '9.5' ),
+		'state' => rgar( $entry, '9.4' ),
+		'city' => rgar( $entry, '9.3' ),
+		'address2' => rgar( $entry, '9.2' ),
+		'address1' => rgar( $entry, '9.1' ),
+		'phone_day' => rgar( $entry, '10' ),
+		'email' => rgar( $entry, '12' ),
+		'lname' => rgar( $entry, '22' ),
+		'fname' => rgar( $entry, '21' ),
+		'text_opt' => rgar( $entry, '13' )
+        );
+
+	// Debug Log post
+    GFCommon::log_debug( 'gform_after_submission: body => ' . print_r( $body, true ) );
+
+	// Performs an HTTP request using the POST method and returns its response.
+    $response = wp_remote_post( $endpoint_url, array( 'body' => $body ) );
+
+	// Debug Log post response
+    GFCommon::log_debug( 'gform_after_submission: response => ' . print_r( $response, true ) );
+}
+// END Post Gravity form #5 (Schedule a Visit) to Gragg
 function hello_elementor_child_enqueue_scripts() {
 	wp_enqueue_style(
 		'hello-elementor-child-style',
@@ -55,6 +88,7 @@ function hello_elementor_child_enqueue_scripts() {
 		'1.0.0'
 	);
 }
+
 add_action( 'wp_enqueue_scripts', 'hello_elementor_child_enqueue_scripts', 20 );
 add_action('wp_head','chat_script');
 
