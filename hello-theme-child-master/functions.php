@@ -78,6 +78,41 @@ function post_to_third_party_id5( $entry, $form ) {
     GFCommon::log_debug( 'gform_after_submission: response => ' . print_r( $response, true ) );
 }
 // END Post Gravity form #5 (Schedule a Visit) to Gragg
+
+// START Post Gravity form #3 (Schedule a Visit) to Gragg
+add_action( 'gform_after_submission_3', 'post_to_third_party_id3', 10, 2 );
+function post_to_third_party_id3( $entry, $form ) {
+
+    $endpoint_url = 'http://services.graggadv.com/lead-gateway/';
+    $body = array(
+        'glue_id' => rgar( $entry, '21' ),
+        'campus' => rgar( $entry, '5' ),
+        'message' => rgar( $entry, '16' ),
+		'program' => rgar( $entry, '6' ),
+		'gradyear' => rgar( $entry, '15' ),
+		'zip' => rgar( $entry, '8.5' ),
+		'state' => rgar( $entry, '8.4' ),
+		'city' => rgar( $entry, '8.3' ),
+		'address2' => rgar( $entry, '8.2' ),
+		'address1' => rgar( $entry, '8.1' ),
+		'phone_day' => rgar( $entry, '3' ),
+		'email' => rgar( $entry, '2' ),
+		'lname' => rgar( $entry, '20' ),
+		'fname' => rgar( $entry, '18' ),
+		'text_opt' => rgar( $entry, '4' )
+        );
+
+	// Debug Log post
+    GFCommon::log_debug( 'gform_after_submission: body => ' . print_r( $body, true ) );
+
+	// Performs an HTTP request using the POST method and returns its response.
+    $response = wp_remote_post( $endpoint_url, array( 'body' => $body ) );
+
+	// Debug Log post response
+    GFCommon::log_debug( 'gform_after_submission: response => ' . print_r( $response, true ) );
+}
+// END Post Gravity form #3 (Schedule a Visit) to Gragg
+
 function hello_elementor_child_enqueue_scripts() {
 	wp_enqueue_style(
 		'hello-elementor-child-style',
