@@ -21,7 +21,7 @@ function post_to_third_party( $entry, $form ) {
         'campus' => rgar( $entry, '5' ),
         'message' => rgar( $entry, '20' ),
 		'program' => rgar( $entry, '6' ),
-		'gradyear' => rgar( $entry, '12' ),
+		'gradyear' => rgar( $entry, '25' ),
 		'zip' => rgar( $entry, '8.5' ),
 		'state' => rgar( $entry, '8.4' ),
 		'city' => rgar( $entry, '8.3' ),
